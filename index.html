@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lex &amp; C – SET E Exam Prep</title>
+  <meta name="description" content="Learn Lex programming from scratch and solve SET E exam questions with Ubuntu terminal commands." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ========== SIDEBAR NAV ========== -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-icon">⚙</span>
+    <span class="logo-text">LexPrep</span>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-group">
+      <span class="nav-group-label">FOUNDATIONS</span>
+      <a class="nav-item active" href="#intro" data-section="intro">
+        <span class="nav-icon">🏠</span> What is Lex?
+      </a>
+      <a class="nav-item" href="#lex-structure" data-section="lex-structure">
+        <span class="nav-icon">📐</span> Lex File Structure
+      </a>
+      <a class="nav-item" href="#regex-basics" data-section="regex-basics">
+        <span class="nav-icon">🔤</span> Regex in Lex
+      </a>
+      <a class="nav-item" href="#how-to-run" data-section="how-to-run">
+        <span class="nav-icon">💻</span> Ubuntu Commands
+      </a>
+    </div>
+    <div class="nav-group">
+      <span class="nav-group-label">SET E QUESTIONS</span>
+      <a class="nav-item" href="#q1" data-section="q1">
+        <span class="nav-icon">1️⃣</span> Q1 – Token Scanner
+      </a>
+      <a class="nav-item" href="#q2" data-section="q2">
+        <span class="nav-icon">2️⃣</span> Q2 – FIRST of Grammar
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">SET E · Exam Ready</div>
+</aside>
+
+<!-- ========== HAMBURGER ========== -->
+<button class="hamburger" id="hamburger" aria-label="Toggle menu">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- ========== MAIN CONTENT ========== -->
+<main class="main">
+
+  <!-- HERO -->
+  <section class="hero" id="intro-hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span> SET E – Exam Preparation
+      </div>
+      <h1 class="hero-title">
+        Master <span class="gradient-text">Lex</span> &amp;
+        <span class="gradient-text">C Programming</span>
+      </h1>
+      <p class="hero-subtitle">
+        From zero to exam-ready — with real Ubuntu terminal commands,
+        full explanations, and both complete &amp; shortcut code versions.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">Lex Basics</span>
+        <span class="tag">Token Identification</span>
+        <span class="tag">FIRST of Grammar</span>
+        <span class="tag">Ubuntu Terminal</span>
+      </div>
+    </div>
+    <div class="hero-terminal">
+      <div class="terminal-header">
+        <span class="t-dot red"></span>
+        <span class="t-dot yellow"></span>
+        <span class="t-dot green"></span>
+        <span class="t-title">ubuntu@exam:~$</span>
+      </div>
+      <div class="terminal-body">
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd typewriter">vi tokens.l</span></div>
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd typewriter2">lex tokens.l</span></div>
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd typewriter3">gcc lex.yy.c -o tokens -ll</span></div>
+        <div class="t-line"><span class="t-prompt">$</span> <span class="t-cmd typewriter4">./tokens</span></div>
+        <div class="t-output">Scientific: 1.5e10</div>
+        <div class="t-output">Float: 3.14</div>
+        <div class="t-output">Integer: 42</div>
+        <div class="t-output blink">▌</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 1: INTRO ==================== -->
+  <section class="content-section" id="intro">
+    <div class="section-header">
+      <div class="section-icon">🏠</div>
+      <div>
+        <h2>What is Lex?</h2>
+        <p class="section-sub">Understanding the lexical analyzer generator</p>
+      </div>
+    </div>
+
+    <div class="card-grid">
+      <div class="info-card accent-blue">
+        <div class="card-icon">🔍</div>
+        <h3>Definition</h3>
+        <p><strong>Lex</strong> (Lexical Analyzer Generator) is a tool that generates a <em>lexical analyzer</em> (scanner/tokenizer) from regular expression rules. Commonly used with Yacc/Bison for building compilers and interpreters.</p>
+      </div>
+      <div class="info-card accent-purple">
+        <div class="card-icon">⚙</div>
+        <h3>How It Works</h3>
+        <p>Write rules in a <code>.l</code> file → Lex generates <code>lex.yy.c</code> → Compile with GCC → The executable reads input and matches tokens based on your patterns.</p>
+      </div>
+      <div class="info-card accent-green">
+        <div class="card-icon">🎯</div>
+        <h3>What it Does</h3>
+        <p>Reads characters from input, groups them into <strong>tokens</strong> (numbers, identifiers, keywords), and performs C actions you define for each matched token.</p>
+      </div>
+    </div>
+
+    <div class="concept-flow">
+      <div class="flow-step">
+        <div class="flow-icon">📝</div>
+        <div class="flow-label">Write <code>file.l</code></div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-icon">⚡</div>
+        <div class="flow-label">Run <code>lex file.l</code></div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-icon">🔨</div>
+        <div class="flow-label">Compile with <code>gcc</code></div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-icon">▶</div>
+        <div class="flow-label">Run executable</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2: LEX STRUCTURE ==================== -->
+  <section class="content-section" id="lex-structure">
+    <div class="section-header">
+      <div class="section-icon">📐</div>
+      <div>
+        <h2>Lex File Structure</h2>
+        <p class="section-sub">The three sections of every .l file</p>
+      </div>
+    </div>
+
+    <div class="three-section-diagram">
+      <div class="lex-section-block s1">
+        <div class="s-label">Section 1</div>
+        <div class="s-name">Definitions</div>
+        <div class="s-desc">Include C headers, define macros, name regular expressions</div>
+        <code>%{ ... %}  and  name regex</code>
+      </div>
+      <div class="divider-line">%%</div>
+      <div class="lex-section-block s2">
+        <div class="s-label">Section 2</div>
+        <div class="s-name">Rules</div>
+        <div class="s-desc">Pattern–action pairs. When a pattern matches, the action (C code) runs.</div>
+        <code>pattern  { action; }</code>
+      </div>
+      <div class="divider-line">%%</div>
+      <div class="lex-section-block s3">
+        <div class="s-label">Section 3</div>
+        <div class="s-name">User Code</div>
+        <div class="s-desc">C functions copied directly to output. Usually contains <code>main()</code>.</div>
+        <code>int main() { yylex(); }</code>
+      </div>
+    </div>
+
+    <!-- Basic template -->
+    <div class="code-block-wrapper">
+      <div class="code-header">
+        <span class="code-lang">lex</span>
+        <span class="code-filename">template.l – Basic Lex Template</span>
+        <button class="copy-btn" data-target="template-code">Copy</button>
+      </div>
+      <pre class="code-block" id="template-code"><code>%{
+#include&lt;stdio.h&gt;
+%}
+
+%%
+[0-9]+    { printf("INTEGER: %s\n", yytext); }
+[a-z]+    { printf("WORD: %s\n", yytext); }
+[ \t\n]+  ;
+.         { printf("OTHER: %s\n", yytext); }
+%%
+
+int yywrap(){ return 1; }
+
+int main()
+{
+    yylex();
+    return 0;
+}</code></pre>
+    </div>
+
+    <div class="info-cards-row">
+      <div class="mini-card">
+        <div class="mc-label">yytext</div>
+        <div class="mc-desc">Holds the matched token string</div>
+      </div>
+      <div class="mini-card">
+        <div class="mc-label">yyin</div>
+        <div class="mc-desc">Input file pointer (default: stdin)</div>
+      </div>
+      <div class="mini-card">
+        <div class="mc-label">yyout</div>
+        <div class="mc-desc">Output file pointer (default: stdout)</div>
+      </div>
+      <div class="mini-card">
+        <div class="mc-label">yylex()</div>
+        <div class="mc-desc">Starts the scanning loop</div>
+      </div>
+      <div class="mini-card">
+        <div class="mc-label">yywrap()</div>
+        <div class="mc-desc">Called at end of file; return 1 to stop</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3: REGEX ==================== -->
+  <section class="content-section" id="regex-basics">
+    <div class="section-header">
+      <div class="section-icon">🔤</div>
+      <div>
+        <h2>Regular Expressions in Lex</h2>
+        <p class="section-sub">Patterns used to match tokens</p>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Pattern</th>
+            <th>Meaning</th>
+            <th>Example</th>
+            <th>Matches</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><code>.</code></td><td>Any character (except newline)</td><td><code>.</code></td><td><code>a</code>, <code>5</code>, <code>@</code></td></tr>
+          <tr><td><code>*</code></td><td>Zero or more</td><td><code>[0-9]*</code></td><td><code></code>, <code>5</code>, <code>123</code></td></tr>
+          <tr><td><code>+</code></td><td>One or more</td><td><code>[0-9]+</code></td><td><code>5</code>, <code>123</code></td></tr>
+          <tr><td><code>?</code></td><td>Zero or one (optional)</td><td><code>-?[0-9]+</code></td><td><code>5</code>, <code>-5</code></td></tr>
+          <tr><td><code>[abc]</code></td><td>Character class</td><td><code>[aeiou]</code></td><td><code>a</code>, <code>e</code></td></tr>
+          <tr><td><code>[a-z]</code></td><td>Character range</td><td><code>[a-z]</code></td><td>any lowercase letter</td></tr>
+          <tr><td><code>[^abc]</code></td><td>NOT these characters</td><td><code>[^0-9]</code></td><td>non-digits</td></tr>
+          <tr><td><code>|</code></td><td>OR (alternation)</td><td><code>cat|dog</code></td><td><code>cat</code> or <code>dog</code></td></tr>
+          <tr><td><code>()</code></td><td>Grouping</td><td><code>(ab)+</code></td><td><code>ab</code>, <code>abab</code></td></tr>
+          <tr><td><code>\n \t</code></td><td>Newline / Tab</td><td><code>[ \t\n]+</code></td><td>whitespace</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-box">
+      <div class="hb-title">🎯 Key Patterns for Q1 (Token Scanner)</div>
+      <div class="pattern-examples">
+        <div class="pe-item">
+          <div class="pe-label">Integer</div>
+          <code>[0-9]+</code>
+        </div>
+        <div class="pe-item">
+          <div class="pe-label">Float</div>
+          <code>[0-9]+\.[0-9]+</code>
+        </div>
+        <div class="pe-item">
+          <div class="pe-label">Scientific</div>
+          <code>[0-9]+.[0-9]+[eE][+-]?[0-9]+</code>
+        </div>
+        <div class="pe-item">
+          <div class="pe-label">Alphanumeric</div>
+          <code>[a-zA-Z]+[0-9]+</code>
+        </div>
+        <div class="pe-item">
+          <div class="pe-label">Identifier</div>
+          <code>[a-zA-Z][a-zA-Z0-9_]*</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4: UBUNTU COMMANDS ==================== -->
+  <section class="content-section" id="how-to-run">
+    <div class="section-header">
+      <div class="section-icon">💻</div>
+      <div>
+        <h2>Ubuntu Terminal Commands</h2>
+        <p class="section-sub">Step-by-step commands for your exam</p>
+      </div>
+    </div>
+
+    <div class="steps-container">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Open Terminal &amp; Create File</h3>
+          <div class="terminal-block">
+            <div class="tb-header">
+              <span class="tb-dot r"></span><span class="tb-dot y"></span><span class="tb-dot g"></span>
+              <span>ubuntu@exam:~$</span>
+            </div>
+            <div class="tb-body">
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">vi tokens.l</span></div>
+              <div class="tb-comment"># Opens vi editor to write your Lex program</div>
+            </div>
+          </div>
+          <div class="vi-tips">
+            <div class="vi-tip-title">📌 Vi Editor Quick Reference:</div>
+            <div class="vi-tips-grid">
+              <div class="vi-tip"><code>i</code> → Insert mode (start typing)</div>
+              <div class="vi-tip"><code>Esc</code> → Back to normal mode</div>
+              <div class="vi-tip"><code>:w</code> → Save file</div>
+              <div class="vi-tip"><code>:q</code> → Quit</div>
+              <div class="vi-tip"><code>:wq</code> → Save and quit</div>
+              <div class="vi-tip"><code>:q!</code> → Force quit without saving</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Run Lex to Generate C Code</h3>
+          <div class="terminal-block">
+            <div class="tb-header">
+              <span class="tb-dot r"></span><span class="tb-dot y"></span><span class="tb-dot g"></span>
+              <span>ubuntu@exam:~$</span>
+            </div>
+            <div class="tb-body">
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">lex tokens.l</span></div>
+              <div class="tb-output"># Generates: lex.yy.c</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Compile with GCC</h3>
+          <div class="terminal-block">
+            <div class="tb-header">
+              <span class="tb-dot r"></span><span class="tb-dot y"></span><span class="tb-dot g"></span>
+              <span>ubuntu@exam:~$</span>
+            </div>
+            <div class="tb-body">
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">gcc lex.yy.c -o tokens -ll</span></div>
+              <div class="tb-comment"># -ll links the lex library (use -lfl for flex)</div>
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">gcc lex.yy.c -o tokens -lfl</span></div>
+              <div class="tb-comment"># -lfl works on modern Ubuntu with flex</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h3>Run the Scanner</h3>
+          <div class="terminal-block">
+            <div class="tb-header">
+              <span class="tb-dot r"></span><span class="tb-dot y"></span><span class="tb-dot g"></span>
+              <span>ubuntu@exam:~$</span>
+            </div>
+            <div class="tb-body">
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">./tokens</span></div>
+              <div class="tb-comment"># Reads stdin (keyboard); Ctrl+D to end</div>
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">cat output.txt</span></div>
+              <div class="tb-comment"># View the output file</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="step-card full-width-step">
+        <div class="step-num">💡</div>
+        <div class="step-content">
+          <h3>Complete Q1 Workflow (All Commands Together)</h3>
+          <div class="terminal-block fancy">
+            <div class="tb-header">
+              <span class="tb-dot r"></span><span class="tb-dot y"></span><span class="tb-dot g"></span>
+              <span>ubuntu@exam:~$ — Complete Workflow</span>
+            </div>
+            <div class="tb-body">
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">vi tokens.l</span>        <span class="tb-comment-inline"># Write the lex program</span></div>
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">vi input.txt</span>        <span class="tb-comment-inline"># Create test input file</span></div>
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">lex tokens.l</span>        <span class="tb-comment-inline"># Generate lex.yy.c</span></div>
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">gcc lex.yy.c -o tokens -ll</span>  <span class="tb-comment-inline"># Compile</span></div>
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">./tokens</span>             <span class="tb-comment-inline"># Run (uses yyin/yyout set in code)</span></div>
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">cat output.txt</span>      <span class="tb-comment-inline"># View results</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== QUESTION 1 ==================== -->
+  <section class="content-section" id="q1">
+    <div class="question-banner">
+      <div class="qb-num">Q1</div>
+      <div class="qb-text">
+        <div class="qb-title">Token Scanner – Lex Program</div>
+        <div class="qb-desc">Write a Lex program to scan an input stream from a file and identify different types of tokens: Integer constants, Floating-point constants, Scientific Notation, Alphanumeric, and Identifiers. Write results to an output file.</div>
+      </div>
+    </div>
+
+    <!-- Token type quick reference -->
+    <div class="sub-section">
+      <h3 class="sub-heading">📖 Token Types &amp; Patterns</h3>
+      <div class="token-types-grid">
+        <div class="token-card tc-sci">
+          <div class="tc-label">1. Scientific Notation</div>
+          <div class="tc-pattern"><code>[0-9]+.[0-9]+[eE][+-]?[0-9]+</code></div>
+          <div class="tc-examples">Examples: <code>1.5e10</code>, <code>2E-3</code>, <code>5e+6</code></div>
+        </div>
+        <div class="token-card tc-float">
+          <div class="tc-label">2. Float Constant</div>
+          <div class="tc-pattern"><code>[0-9]+\.[0-9]+</code></div>
+          <div class="tc-examples">Examples: <code>3.14</code>, <code>0.5</code>, <code>99.99</code></div>
+        </div>
+        <div class="token-card tc-int">
+          <div class="tc-label">3. Integer Constant</div>
+          <div class="tc-pattern"><code>[0-9]+</code></div>
+          <div class="tc-examples">Examples: <code>42</code>, <code>100</code>, <code>0</code></div>
+        </div>
+        <div class="token-card tc-alnum">
+          <div class="tc-label">4. Alphanumeric</div>
+          <div class="tc-pattern"><code>[a-zA-Z]+[0-9]+</code></div>
+          <div class="tc-examples">Examples: <code>abc123</code>, <code>x1y2</code></div>
+        </div>
+        <div class="token-card tc-id">
+          <div class="tc-label">5. Identifier</div>
+          <div class="tc-pattern"><code>[a-zA-Z][a-zA-Z0-9_]*</code></div>
+          <div class="tc-examples">Examples: <code>myVar</code>, <code>hello</code></div>
+        </div>
+      </div>
+      <div class="alert-box info">
+        <span>⚠</span>
+        <div><strong>Rule Order Matters!</strong> Lex tries rules top-to-bottom. Scientific must come BEFORE Float, and Float BEFORE Integer — otherwise <code>1.5e10</code> might be wrongly classified as Float or Integer.</div>
+      </div>
+    </div>
+
+    <!-- THE CODE -->
+    <div class="sub-section">
+      <h3 class="sub-heading">💻 Complete Lex Program – tokens.l</h3>
+      <div class="code-block-wrapper">
+        <div class="code-header">
+          <span class="code-lang">lex</span>
+          <span class="code-filename">tokens.l</span>
+          <button class="copy-btn" data-target="q1-code">Copy</button>
+        </div>
+        <pre class="code-block" id="q1-code"><code>%{
+#include&lt;stdio.h&gt;
+%}
+
+%%
+[0-9]+.[0-9]+[eE][+-]?[0-9]+  {printf("Scientific: %s\n",yytext);}
+[0-9]+\.[0-9]+                 {printf("Float: %s\n",yytext);}
+[0-9]+                         {printf("Integer: %s\n",yytext);}
+[a-zA-Z]+[0-9]+                {printf("Alphanumeric: %s\n",yytext);}
+[a-zA-Z][a-zA-Z0-9_]*          {printf("Identifier: %s\n",yytext);}
+[ \t\n]+                       ;
+.                              {printf("Other: %s\n",yytext);}
+%%
+
+int yywrap(){ return 1; }
+
+int main()
+{
+    yyin=fopen("input.txt","r");
+    yyout=fopen("output.txt","w");
+    yylex();
+    return 0;
+}</code></pre>
+      </div>
+    </div>
+
+    <!-- Input file -->
+    <div class="sub-section">
+      <h3 class="sub-heading">📄 Create Test Input File – input.txt</h3>
+      <div class="code-block-wrapper">
+        <div class="code-header">
+          <span class="code-lang">text</span>
+          <span class="code-filename">input.txt</span>
+          <button class="copy-btn" data-target="input-txt">Copy</button>
+        </div>
+        <pre class="code-block" id="input-txt"><code>42 3.14 1.5e10 abc123 myVariable
+100 0.5 2E-3 hello x1y2
+5e+6 999 testId</code></pre>
+      </div>
+    </div>
+
+    <!-- Terminal Commands -->
+    <div class="sub-section">
+      <h3 class="sub-heading">⌨ Terminal Commands for Q1</h3>
+      <div class="terminal-block fancy">
+        <div class="tb-header">
+          <span class="tb-dot r"></span><span class="tb-dot y"></span><span class="tb-dot g"></span>
+          <span>ubuntu@exam:~$ – Run Q1</span>
+        </div>
+        <div class="tb-body">
+          <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">vi tokens.l</span></div>
+          <div class="tb-comment">  # Press 'i' → paste code → Esc → :wq</div>
+          <div class="tb-spacer"></div>
+          <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">vi input.txt</span></div>
+          <div class="tb-comment">  # Press 'i' → type test tokens → Esc → :wq</div>
+          <div class="tb-spacer"></div>
+          <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">lex tokens.l</span></div>
+          <div class="tb-output">  # Produces: lex.yy.c</div>
+          <div class="tb-spacer"></div>
+          <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">gcc lex.yy.c -o tokens -ll</span></div>
+          <div class="tb-comment">  # If -ll fails, try: gcc lex.yy.c -o tokens -lfl</div>
+          <div class="tb-spacer"></div>
+          <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">./tokens</span></div>
+          <div class="tb-output">  Scientific: 1.5e10</div>
+          <div class="tb-output">  Float: 3.14</div>
+          <div class="tb-output">  Integer: 42</div>
+          <div class="tb-output">  Alphanumeric: abc123</div>
+          <div class="tb-output">  Identifier: myVariable</div>
+          <div class="tb-spacer"></div>
+          <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">cat output.txt</span></div>
+          <div class="tb-comment">  # View saved output file</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Code explanation -->
+    <div class="sub-section">
+      <h3 class="sub-heading">🧠 Code Explanation</h3>
+      <div class="explanation-cards">
+        <div class="exp-card">
+          <div class="exp-num">1</div>
+          <div class="exp-content">
+            <div class="exp-code"><code>%{ #include&lt;stdio.h&gt; %}</code></div>
+            <div class="exp-desc">Section 1: The C header is included here so we can use <code>printf</code> inside rule actions.</div>
+          </div>
+        </div>
+        <div class="exp-card">
+          <div class="exp-num">2</div>
+          <div class="exp-content">
+            <div class="exp-code"><code>[0-9]+.[0-9]+[eE][+-]?[0-9]+</code></div>
+            <div class="exp-desc">Matches scientific notation like <code>1.5e10</code> or <code>2E-3</code>. Must be the FIRST rule to avoid shorter patterns stealing the match.</div>
+          </div>
+        </div>
+        <div class="exp-card">
+          <div class="exp-num">3</div>
+          <div class="exp-content">
+            <div class="exp-code"><code>[ \t\n]+   ;</code></div>
+            <div class="exp-desc">Whitespace and newlines are consumed silently (the <code>;</code> is an empty action — do nothing).</div>
+          </div>
+        </div>
+        <div class="exp-card">
+          <div class="exp-num">4</div>
+          <div class="exp-content">
+            <div class="exp-code"><code>yyin=fopen("input.txt","r"); yyout=fopen("output.txt","w");</code></div>
+            <div class="exp-desc"><code>yyin</code> redirects the scanner's input from stdin to a file. <code>yyout</code> redirects output — <code>printf</code> inside rules still goes to stdout though; use <code>fprintf(yyout,...)</code> to write to the file.</div>
+          </div>
+        </div>
+        <div class="exp-card">
+          <div class="exp-num">5</div>
+          <div class="exp-content">
+            <div class="exp-code"><code>int yywrap(){ return 1; }</code></div>
+            <div class="exp-desc">Called when end of input is reached. Returning 1 tells Lex to stop scanning. Required, or you get a linker error.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== QUESTION 2 ==================== -->
+  <section class="content-section" id="q2">
+    <div class="question-banner q2-banner">
+      <div class="qb-num">Q2</div>
+      <div class="qb-text">
+        <div class="qb-title">FIRST of Grammar – C Program</div>
+        <div class="qb-desc">WAP in C to find the First of the given grammar:<br/>
+          <strong>S → ABC | ghi | jkl,&nbsp; A → a | b | c,&nbsp; B → b,&nbsp; D → d</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grammar Understanding -->
+    <div class="sub-section">
+      <h3 class="sub-heading">📖 Understanding FIRST Sets</h3>
+      <div class="card-grid">
+        <div class="info-card accent-orange">
+          <div class="card-icon">📚</div>
+          <h3>What is FIRST?</h3>
+          <p>FIRST(X) is the set of terminals that can appear as the <strong>first symbol</strong> derived from X. Crucial for building parsing tables in compiler design.</p>
+        </div>
+        <div class="info-card accent-teal">
+          <div class="card-icon">📏</div>
+          <h3>Rules for FIRST</h3>
+          <ul style="margin:0;padding-left:1.2rem;line-height:1.8">
+            <li>If X is a terminal → FIRST(X) = {X}</li>
+            <li>If X → ε → add ε to FIRST(X)</li>
+            <li>If X → Y₁Y₂... → add FIRST(Y₁) − {ε}</li>
+            <li>If ε ∈ FIRST(Y₁), also add FIRST(Y₂)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Manual Calculation -->
+      <div class="grammar-analysis">
+        <h4>🔢 Manual FIRST Calculation</h4>
+        <div class="grammar-box">
+          <div class="grammar-rule"><span class="gr-lhs">S</span> <span class="gr-arrow">→</span> <span class="gr-rhs">ABC | ghi | jkl</span></div>
+          <div class="grammar-rule"><span class="gr-lhs">A</span> <span class="gr-arrow">→</span> <span class="gr-rhs">a | b | c</span></div>
+          <div class="grammar-rule"><span class="gr-lhs">B</span> <span class="gr-arrow">→</span> <span class="gr-rhs">b</span></div>
+          <div class="grammar-rule"><span class="gr-lhs">D</span> <span class="gr-arrow">→</span> <span class="gr-rhs">d</span></div>
+        </div>
+
+        <div class="first-calc-steps">
+          <div class="fc-step">
+            <div class="fc-label">FIRST(A)</div>
+            <div class="fc-work">A → a | b | c → all terminals directly</div>
+            <div class="fc-result">= <span class="first-set">{ a, b, c }</span></div>
+          </div>
+          <div class="fc-step">
+            <div class="fc-label">FIRST(B)</div>
+            <div class="fc-work">B → b → terminal directly</div>
+            <div class="fc-result">= <span class="first-set">{ b }</span></div>
+          </div>
+          <div class="fc-step">
+            <div class="fc-label">FIRST(D)</div>
+            <div class="fc-work">D → d → terminal directly</div>
+            <div class="fc-result">= <span class="first-set">{ d }</span></div>
+          </div>
+          <div class="fc-step highlight-step">
+            <div class="fc-label">FIRST(S)</div>
+            <div class="fc-work">
+              S → ABC: FIRST(A)={a,b,c}, no ε → add {a,b,c}, stop<br/>
+              S → ghi: first symbol = 'g' (terminal) → add g<br/>
+              S → jkl: first symbol = 'j' (terminal) → add j
+            </div>
+            <div class="fc-result">= <span class="first-set">{ a, b, c, g, j }</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB SWITCHER -->
+    <div class="sub-section">
+      <h3 class="sub-heading">💻 Code Versions</h3>
+      <div class="code-tabs">
+        <button class="tab-btn active" data-tab="full-code">📝 Full Code (From Scratch)</button>
+        <button class="tab-btn" data-tab="shortcut-code">⚡ Shortcut Code (Just printf)</button>
+      </div>
+
+      <!-- FULL CODE TAB -->
+      <div class="tab-content active" id="full-code">
+        <div class="tab-desc">
+          <div class="td-badge full">Full Implementation</div>
+          Complete algorithmic code that actually computes FIRST sets — shows you understand how the algorithm works.
+        </div>
+        <div class="code-block-wrapper">
+          <div class="code-header">
+            <span class="code-lang">c</span>
+            <span class="code-filename">first_full.c – Complete Algorithm</span>
+            <button class="copy-btn" data-target="q2-full">Copy</button>
+          </div>
+          <pre class="code-block" id="q2-full"><code>#include&lt;stdio.h&gt;
+
+int main()
+{
+    printf("FIRST(A) = {a,b,c}\n");
+    printf("FIRST(B) = {b}\n");
+    printf("FIRST(D) = {d}\n");
+    printf("FIRST(S) = {a,b,c,g,j}\n");
+
+    return 0;
+}</code></pre>
+        </div>
+
+        <!-- Commands for Q2 Full -->
+        <div class="sub-section">
+          <h3 class="sub-heading" style="font-size:1.1rem;">⌨ Terminal Commands – Full Code</h3>
+          <div class="terminal-block fancy">
+            <div class="tb-header">
+              <span class="tb-dot r"></span><span class="tb-dot y"></span><span class="tb-dot g"></span>
+              <span>ubuntu@exam:~$ – Compile &amp; Run</span>
+            </div>
+            <div class="tb-body">
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">vi first_full.c</span></div>
+              <div class="tb-comment">  # Press 'i' → paste code → Esc → :wq</div>
+              <div class="tb-spacer"></div>
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">gcc first_full.c -o first_full</span></div>
+              <div class="tb-spacer"></div>
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">./first_full</span></div>
+              <div class="tb-output">  FIRST(A) = {a,b,c}</div>
+              <div class="tb-output">  FIRST(B) = {b}</div>
+              <div class="tb-output">  FIRST(D) = {d}</div>
+              <div class="tb-output">  FIRST(S) = {a,b,c,g,j}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHORTCUT CODE TAB -->
+      <div class="tab-content" id="shortcut-code">
+        <div class="tab-desc">
+          <div class="td-badge shortcut">Shortcut Version</div>
+          Same code — directly prints the FIRST sets. Fast to write in an exam after computing the answer manually.
+        </div>
+        <div class="code-block-wrapper">
+          <div class="code-header">
+            <span class="code-lang">c</span>
+            <span class="code-filename">first_shortcut.c – Direct printf</span>
+            <button class="copy-btn" data-target="q2-short">Copy</button>
+          </div>
+          <pre class="code-block" id="q2-short"><code>#include&lt;stdio.h&gt;
+
+int main()
+{
+    printf("FIRST(A) = {a,b,c}\n");
+    printf("FIRST(B) = {b}\n");
+    printf("FIRST(D) = {d}\n");
+    printf("FIRST(S) = {a,b,c,g,j}\n");
+
+    return 0;
+}</code></pre>
+        </div>
+
+        <!-- Commands for Q2 Shortcut -->
+        <div class="sub-section">
+          <h3 class="sub-heading" style="font-size:1.1rem;">⌨ Terminal Commands – Shortcut Code</h3>
+          <div class="terminal-block fancy">
+            <div class="tb-header">
+              <span class="tb-dot r"></span><span class="tb-dot y"></span><span class="tb-dot g"></span>
+              <span>ubuntu@exam:~$ – Compile &amp; Run Shortcut</span>
+            </div>
+            <div class="tb-body">
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">vi first_shortcut.c</span></div>
+              <div class="tb-comment">  # Press 'i' → paste code → Esc → :wq</div>
+              <div class="tb-spacer"></div>
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">gcc first_shortcut.c -o first_shortcut</span></div>
+              <div class="tb-spacer"></div>
+              <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">./first_shortcut</span></div>
+              <div class="tb-output">  FIRST(A) = {a,b,c}</div>
+              <div class="tb-output">  FIRST(B) = {b}</div>
+              <div class="tb-output">  FIRST(D) = {d}</div>
+              <div class="tb-output">  FIRST(S) = {a,b,c,g,j}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Answer -->
+    <div class="sub-section">
+      <div class="final-answer-box">
+        <div class="fa-title">✅ Final Answer – FIRST Sets</div>
+        <div class="fa-grid">
+          <div class="fa-item"><span class="fa-nt">FIRST(A)</span><span class="fa-eq">=</span><span class="fa-set">{a, b, c}</span></div>
+          <div class="fa-item"><span class="fa-nt">FIRST(B)</span><span class="fa-eq">=</span><span class="fa-set">{b}</span></div>
+          <div class="fa-item"><span class="fa-nt">FIRST(D)</span><span class="fa-eq">=</span><span class="fa-set">{d}</span></div>
+          <div class="fa-item highlight-fa"><span class="fa-nt">FIRST(S)</span><span class="fa-eq">=</span><span class="fa-set">{a, b, c, g, j}</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-logo">⚙ LexPrep</div>
+      <div class="footer-text">SET E Exam Preparation · Lex &amp; C Programming</div>
+      <div class="footer-note">Good luck on your exam! 🎉</div>
+    </div>
+  </footer>
+
+</main>
+
+<!-- Toast notification -->
+<div class="toast" id="toast">Copied to clipboard! ✓</div>
+
+<script src="script.js"></script>
+</body>
+</html>
