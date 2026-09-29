@@ -468,25 +468,64 @@ int main()
         </div>
         <pre class="code-block" id="q1-code"><code>%{
 #include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+
+FILE *out;
 %}
 
 %%
-[0-9]+.[0-9]+[eE][+-]?[0-9]+  {printf("Scientific: %s\n",yytext);}
-[0-9]+\.[0-9]+                 {printf("Float: %s\n",yytext);}
-[0-9]+                         {printf("Integer: %s\n",yytext);}
-[a-zA-Z]+[0-9]+                {printf("Alphanumeric: %s\n",yytext);}
-[a-zA-Z][a-zA-Z0-9_]*          {printf("Identifier: %s\n",yytext);}
-[ \t\n]+                       ;
-.                              {printf("Other: %s\n",yytext);}
+
+[0-9]+[eE][+-]?[0-9]+
+{
+    printf("Scientific=%s\n",yytext);
+    fprintf(out,"Scientific=%s\n",yytext);
+}
+
+[0-9]+\.[0-9]+
+{
+    printf("Float=%s\n",yytext);
+    fprintf(out,"Float=%s\n",yytext);
+}
+
+[0-9]+
+{
+    printf("Integer=%s\n",yytext);
+    fprintf(out,"Integer=%s\n",yytext);
+}
+
+[a-zA-Z]+[0-9]+
+{
+    printf("Alphanumeric=%s\n",yytext);
+    fprintf(out,"Alphanumeric=%s\n",yytext);
+}
+
+[a-zA-Z_][a-zA-Z0-9_]*
+{
+    printf("Identifier=%s\n",yytext);
+    fprintf(out,"Identifier=%s\n",yytext);
+}
+
+[ \t\n]+ ;
+
+. ;
 %%
 
-int yywrap(){ return 1; }
+int yywrap()
+{
+    return 1;
+}
 
 int main()
 {
-    yyin=fopen("input.txt","r");
-    yyout=fopen("output.txt","w");
+    FILE *fp;
+
+    fp=fopen("FILE.txt","r");
+    yyin=fp;
+
+    out=fopen("OUTPUT.txt","w");
+
     yylex();
+
     return 0;
 }</code></pre>
       </div>
@@ -494,11 +533,11 @@ int main()
 
     <!-- Input file -->
     <div class="sub-section">
-      <h3 class="sub-heading">📄 Create Test Input File – input.txt</h3>
+      <h3 class="sub-heading">📄 Create Test Input File – FILE.txt</h3>
       <div class="code-block-wrapper">
         <div class="code-header">
           <span class="code-lang">text</span>
-          <span class="code-filename">input.txt</span>
+          <span class="code-filename">FILE.txt</span>
           <button class="copy-btn" data-target="input-txt">Copy</button>
         </div>
         <pre class="code-block" id="input-txt"><code>42 3.14 1.5e10 abc123 myVariable
@@ -519,7 +558,7 @@ int main()
           <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">vi tokens.l</span></div>
           <div class="tb-comment">  # Press 'i' → paste code → Esc → :wq</div>
           <div class="tb-spacer"></div>
-          <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">vi input.txt</span></div>
+          <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">vi FILE.txt</span></div>
           <div class="tb-comment">  # Press 'i' → type test tokens → Esc → :wq</div>
           <div class="tb-spacer"></div>
           <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">lex tokens.l</span></div>
@@ -529,13 +568,13 @@ int main()
           <div class="tb-comment">  # If -ll fails, try: gcc lex.yy.c -o tokens -lfl</div>
           <div class="tb-spacer"></div>
           <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">./tokens</span></div>
-          <div class="tb-output">  Scientific: 1.5e10</div>
-          <div class="tb-output">  Float: 3.14</div>
-          <div class="tb-output">  Integer: 42</div>
-          <div class="tb-output">  Alphanumeric: abc123</div>
-          <div class="tb-output">  Identifier: myVariable</div>
+          <div class="tb-output">  Scientific=1.5e10</div>
+          <div class="tb-output">  Float=3.14</div>
+          <div class="tb-output">  Integer=42</div>
+          <div class="tb-output">  Alphanumeric=abc123</div>
+          <div class="tb-output">  Identifier=myVariable</div>
           <div class="tb-spacer"></div>
-          <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">cat output.txt</span></div>
+          <div class="tb-line"><span class="tb-prompt">$</span> <span class="tb-cmd">cat OUTPUT.txt</span></div>
           <div class="tb-comment">  # View saved output file</div>
         </div>
       </div>
@@ -569,8 +608,8 @@ int main()
         <div class="exp-card">
           <div class="exp-num">4</div>
           <div class="exp-content">
-            <div class="exp-code"><code>yyin=fopen("input.txt","r"); yyout=fopen("output.txt","w");</code></div>
-            <div class="exp-desc"><code>yyin</code> redirects the scanner's input from stdin to a file. <code>yyout</code> redirects output — <code>printf</code> inside rules still goes to stdout though; use <code>fprintf(yyout,...)</code> to write to the file.</div>
+            <div class="exp-code"><code>fp=fopen("FILE.txt","r"); yyin=fp; out=fopen("OUTPUT.txt","w");</code></div>
+            <div class="exp-desc"><code>yyin</code> is set to the input file pointer so the scanner reads from <code>FILE.txt</code>. <code>out</code> is a custom <code>FILE*</code> used with <code>fprintf(out,...)</code> to write token results to <code>OUTPUT.txt</code>.</div>
           </div>
         </div>
         <div class="exp-card">
